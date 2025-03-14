@@ -2,9 +2,11 @@ import { Hex, CELL } from './hex.js';
 import * as THREE from 'three';
 
 export class HexagonGrid {
-    constructor(hex, scene) {
+    constructor(hex, scene, camera, renderer) {
         this.hex = hex;
         this.scene = scene;
+        this.camera = camera;
+        this.renderer = renderer;
         let rayon = 0.2;
         
         const hexagonGeometry = new THREE.CircleGeometry(rayon, 6);
@@ -34,6 +36,11 @@ export class HexagonGrid {
 
         this.aabb = new THREE.Box3();
         this.aabb.setFromObject(hexagonMesh);
+
+        this.raycaster = new THREE.Raycaster();
+        this.mouse = new THREE.Vector2();
+
+        this.renderer.domElement.addEventListener('click', this.onclick.bind(this));
     }
 
     updateColors() {
@@ -50,5 +57,19 @@ export class HexagonGrid {
             
         }
         this.hexagonMesh.instanceColor.needsUpdate = true;
+    }
+
+    onclick(event) {
+        this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+        this.raycaster.setFromCamera(this.mouse, this.camera);
+
+        const intersects = this.raycaster.intersectObjects([this.hexagonMesh]);
+
+        if (intersects.length > 0) {
+            const { i, j } = this.grid[intersects[0].instanceId];
+            console.log("click : ", i, j);
+        }
     }
 }

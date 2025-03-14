@@ -7,21 +7,14 @@ import { createCamera } from './components/Camera';
 
 const scene = new THREE.Scene();
 const camera = createCamera();
-
-let size = 10;
-
-let hex = new Hex(size);
-let grid = new HexagonGrid(hex, scene);
-
-
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-// Center camera on grid
-camera.position.x = (grid.aabb.max.x + grid.aabb.min.x) / 2;
-camera.position.y = (grid.aabb.max.y + grid.aabb.min.y) / 2;
-camera.position.z = 2;
+let size = 10;
+
+let hex = new Hex(size);
+let grid = new HexagonGrid(hex, scene, camera, renderer);
 
 adjustCameraToFitGrid();
 
