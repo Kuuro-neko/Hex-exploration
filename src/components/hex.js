@@ -26,12 +26,19 @@ export class Hex {
         return this.grid[x + y * this.size];
     }
 
+    play(x, y) {
+        this.setCell(x, y, CELL.PLAYER);
+        //if (!this.isWon()) {
+            this.computeAIMove();
+        //}
+    }
+
     setCell(x, y, player) {
         if (x < 0 || x >= this.size || y < 0 || y >= this.size) throw new Error("Invalid cell coordinates");
         if (player !== CELL.PLAYER && player !== CELL.IA) throw new Error("Invalid player");
         if (this.grid[x + y * this.size] !== CELL.EMPTY) throw new Error("Cell already occupied");
         if (player !== this.turn) throw new Error("Not your turn");
-
+        this.turn = player === CELL.PLAYER ? CELL.IA : CELL.PLAYER;
         this.grid[x + y * this.size] = player;
     }
 
@@ -61,6 +68,12 @@ export class Hex {
         return cells;
     }
 
+    isWon() {
+        if (this.isWon(CELL.PLAYER)) return CELL.PLAYER;
+        if (this.isWon(CELL.IA)) return CELL.IA;
+        return false;
+    }
+
     isWon(player) {
         let casesDepart = this.patternDepart[player];
         let casesArrivee = this.patternArrivee[player];
@@ -85,5 +98,17 @@ export class Hex {
             }
         }
         return false;
+    }
+
+    computeAIMove() {
+        // play randomly for now
+        let emptyCells = [];
+        for (let i = 0; i < this.grid.length; i++) {
+            if (this.grid[i] === CELL.EMPTY) {
+                emptyCells.push(i);
+            }
+        }
+        let randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        this.setCell(randomCell % this.size, Math.floor(randomCell / this.size), CELL.IA);
     }
 }
