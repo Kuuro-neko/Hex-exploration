@@ -31,6 +31,9 @@ export class HexagonGrid {
         }
         scene.add(hexagonMesh);
         this.hexagonMesh = hexagonMesh;
+
+        this.aabb = new THREE.Box3();
+        this.aabb.setFromObject(hexagonMesh);
     }
 
     updateColors() {
@@ -44,6 +47,7 @@ export class HexagonGrid {
             color.r = hexI / this.hex.size;
             color.g = hexJ / this.hex.size;
             this.hexagonMesh.setColorAt(i, new THREE.Color(color));
+            
         }
         this.hexagonMesh.instanceColor.needsUpdate = true;
     }
