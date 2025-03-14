@@ -25,9 +25,7 @@ console.log("hex", hex);
 function animate() {
     requestAnimationFrame( animate );
 
-    for (let hexagon of grid.grid) {
-        hexagon.draw(hex.getCell(hexagon.i, hexagon.j), scene);
-    }
+    grid.updateColors();
 
     renderer.render( scene, camera );
 }
