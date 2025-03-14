@@ -1,5 +1,5 @@
 {
-  "name": "hex-exploration",
+  "name": "my-vue-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,10 +8,11 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-  "devDependencies": {
-    "vite": "^6.2.0"
-  },
   "dependencies": {
-    "three.js": "^0.77.1"
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "vite": "^6.2.0"
   }
 }
