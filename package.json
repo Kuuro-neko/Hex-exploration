@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "three": "^0.174.0",
+    "three.js": "^0.77.1",
     "vue": "^3.5.13"
   },
   "devDependencies": {

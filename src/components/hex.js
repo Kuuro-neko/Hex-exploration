@@ -23,16 +23,16 @@ export class Hex {
 
     getCell(x, y) {
         if (x < 0 || x >= this.size || y < 0 || y >= this.size) throw new Error("Invalid cell coordinates");
-        return this.grid[x + y * size];
+        return this.grid[x + y * this.size];
     }
 
     setCell(x, y, player) {
         if (x < 0 || x >= this.size || y < 0 || y >= this.size) throw new Error("Invalid cell coordinates");
         if (player !== CELL.PLAYER && player !== CELL.IA) throw new Error("Invalid player");
-        if (this.grid[x + y * size] !== CELL.EMPTY) throw new Error("Cell already occupied");
+        if (this.grid[x + y * this.size] !== CELL.EMPTY) throw new Error("Cell already occupied");
         if (player !== this.turn) throw new Error("Not your turn");
 
-        this.grid[x + y * size] = player;
+        this.grid[x + y * this.size] = player;
     }
 
     computePatterns() {
