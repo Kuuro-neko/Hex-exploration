@@ -5,22 +5,23 @@ export class HexagonGrid {
     constructor(hex, scene) {
         this.hex = hex;
         this.scene = scene;
+        let rayon = 0.2;
         
-        const hexagonGeometry = new THREE.CircleGeometry(1, 6);
+        const hexagonGeometry = new THREE.CircleGeometry(rayon, 6);
         const hexagonMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
         const hexagonMesh = new THREE.InstancedMesh(hexagonGeometry, hexagonMaterial, hex.size * hex.size);
 
         hexagonMesh.rotation.z = Math.PI / 2;
 
         this.grid = [];
-        let rayon = 0.2;
+        
         let distance = rayon - (Math.sin(1 * Math.PI / 3) * rayon);
 
         let index = 0;
         for (let i = 0; i < hex.size; i++) {
             for (let j = 0; j < hex.size; j++) {
-                let x = (rayon - distance)*(2+j+2*i);
-                let y = distance*2+(rayon - distance*2)*(1+2*j);
+                let y = (rayon - distance)*(2+j+2*i);
+                let x = distance*2+(rayon - distance*2)*(1+2*j);
 
                 const matrix = new THREE.Matrix4().makeTranslation(x, y, 0);
                 hexagonMesh.setMatrixAt(index, matrix);
